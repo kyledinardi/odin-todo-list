@@ -1,2 +1,3 @@
 import '../style.css';
-import './pageload';
+import './pageload.js';
+import './projects.js';
