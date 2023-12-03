@@ -1,5 +1,8 @@
+import editSVG from '../square-edit-outline.svg';
+import deleteSVG from '../delete.svg';
+
 function addElement(parentSelector, tag, className, text, ...args) {
-  const parentElement = document.querySelector(parentSelector)
+  const parentElement = document.querySelector(parentSelector);
   const newElement = document.createElement(tag);
   newElement.classList.add(className);
   if(text){
@@ -18,6 +21,8 @@ function addTodo(todo) {
   addElement('.todo', 'input', 'checkbox', '', 'type', 'checkbox');
   addElement('.todo', 'p', 'todo-name', todo.title);
   addElement('.todo', 'p', 'todo-date', todo.dueDate);
-}
+  addElement('.todo', 'img', 'todo-edit', '', 'src', editSVG);
+  addElement('.todo', 'img', 'todo-edit', '', 'src', deleteSVG);
+ }
 
 export {addElement, addTodo};

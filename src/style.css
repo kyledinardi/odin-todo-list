@@ -33,15 +33,33 @@ body {
 .main-content {
   background-color: #f2f5de;
   padding: 50px;
+  display: grid;
+  grid-auto-rows: min-content;
+  justify-items: center;
 }
 
 .todo {
   display: grid;
-  grid-template-columns: min-content 1fr min-content;
-  gap: 30px;
+  align-items: center;
+  grid-template-columns: min-content 1fr repeat(3, min-content);
+  width: min(500px, 100%);
+  gap: 10px;
   padding: 10px;
+}
+
+.low {
+  border: green solid 2px;
+}
+
+.medium {
+  border: yellow solid 2px;
 }
 
 .high {
   border: red solid 2px;
+}
+
+.todo-edit {
+  height: 24px;
+  width: 24px;
 }
