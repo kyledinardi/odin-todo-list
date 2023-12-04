@@ -15,6 +15,39 @@ body {
   grid-template-rows: 80px 1fr;
 }
 
+dialog {
+  position: absolute;
+  margin: auto;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+form {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 10px;
+}
+
+textarea {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.new-project {
+  display: flex;
+  gap: 20px;
+}
+
+.dialog-btns {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dialog-btns button {
+  flex: 1;
+}
+
 .heading {
   grid-area: 1 / 1 / 2 / 3;
   display: grid;

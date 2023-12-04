@@ -1,3 +1,4 @@
 import '../style.css';
-import './pageload.js';
-import './projects.js';
+import pageLoad from './pageload.js';
+
+pageLoad();

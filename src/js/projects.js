@@ -1,6 +1,5 @@
-import { addTodo } from './dom.js';
-
 const projects = []
+const getProjects = () => projects;
 
 function createProject(name) {
   const todos = [];
@@ -10,10 +9,13 @@ function createProject(name) {
   return {getName, getTodos, pushTodo};
 }
 
+function pushProject(project) {
+  projects.push(project);
+}
+
 function createTodo(title, dueDate, priority, details) {
   let checklist = false;
   return {title, dueDate, priority, details,  checklist};
 }
 
-const newTodo = createTodo('Brush teeth', 'Now', 'high');
-addTodo(newTodo)
+export {getProjects, pushProject};
