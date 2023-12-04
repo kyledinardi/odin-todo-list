@@ -71,6 +71,12 @@ textarea {
   justify-items: center;
 }
 
+.new-todo-btn {
+  justify-self: start;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
 .todo {
   display: grid;
   align-items: center;

@@ -1,5 +1,4 @@
 import {addElement} from "./dom";
-import { getProjects } from "./projects";
 
 function pageLoad(){
   addElement('body', 'h1', 'heading', 'TODO LIST');
@@ -10,6 +9,7 @@ function pageLoad(){
   addElement('.sidebar', 'h2', 'side-heading', 'Week');
   addElement('.sidebar', 'h2', 'side-heading', 'Projects');
   addElement('.sidebar', 'div', 'project-list');
+  addElement('.main-content', 'button', 'new-todo-btn', 'New Task');
   addModal();
 }
 
@@ -55,6 +55,8 @@ function addModal() {
     'due-date',
     'name',
     'due-date',
+    'required',
+    ''
   );
 
   addElement('form', 'div', 'priority-input');
@@ -89,20 +91,42 @@ function addModal() {
     'id',
     'project',
     'name',
-    'project'
+    'project',
+    'required', 
+    ''
   );
 
-  addElement('.project-select', 'option', '', '', 'value', 'default');
-
+  addElement('.project-select', 'option', '', '', 'value', '');
   addElement('form', 'div', 'new-project')
-  addElement('.new-project', 'input', 'new-project-input', '', 'placeholder', 'New Project');
-  addElement('.new-project', 'button', 'new-project-btn', 'Add', 'type', 'button');
+
+  addElement(
+    '.new-project', 
+    'input', 
+    'new-project-input', 
+    '', 
+    'placeholder', 
+    'New Project'
+  );
+  addElement(
+    '.new-project', 
+    'button', 
+    'new-project-btn', 
+    'Add', 
+    'type', 
+    'button'
+  );
+
   addElement('form', 'div', 'dialog-btns');
   addElement('.dialog-btns', 'button', 'confirm-btn', 'Add Task');
-  addElement('.dialog-btns', 'button', 'cancel-btn', 'Cancel', 'type', 'button');
 
-  const dialog = document.querySelector('dialog');
-  dialog.showModal();
+  addElement(
+    '.dialog-btns', 
+    'button', 
+    'cancel-btn', 
+    'Cancel', 
+    'type', 
+    'reset'
+  );
 }
 
 export default pageLoad;

@@ -22,4 +22,33 @@ function addElement(parentSelector, tag, className, text, ...args) {
   parentElement.appendChild(newElement);
 }
 
-export {addElement};
+function addEventListeners(){
+  const dialog = document.querySelector('dialog');
+  const form = document.querySelector('form');
+  const newTodoBtn = document.querySelector('.new-todo-btn');
+  const cancelBtn = document.querySelector('.cancel-btn');
+  const confirmBtn = document.querySelector('.confirm-btn');
+
+  function handleDialogEscape(e) {
+    if(e.key === 'Escape'){
+      form.reset();
+      removeEventListener('keydown', handleDialogEscape);
+    }
+  }
+
+  newTodoBtn.addEventListener('click', () => {
+    dialog.showModal();
+    window.addEventListener('keydown', handleDialogEscape)
+  });
+  
+  cancelBtn.addEventListener('click', () => {
+    dialog.close();
+    removeEventListener('keydown', handleDialogEscape);
+  });
+
+  confirmBtn.addEventListener('click', () => {
+
+  });
+}
+
+export {addElement, addEventListeners};
