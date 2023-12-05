@@ -63,6 +63,15 @@ textarea {
   grid-template-rows: repeat(4, 60px) 1fr;
 }
 
+.side-heading {
+  align-self: center;
+}
+
+.project-list {
+  list-style: none;
+  padding-left: 20px;
+}
+
 .main-content {
   background-color: #f2f5de;
   padding: 50px;

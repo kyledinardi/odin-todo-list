@@ -8,7 +8,7 @@ function pageLoad(){
   addElement('.sidebar', 'h2', 'side-heading', 'Today');
   addElement('.sidebar', 'h2', 'side-heading', 'Week');
   addElement('.sidebar', 'h2', 'side-heading', 'Projects');
-  addElement('.sidebar', 'div', 'project-list');
+  addElement('.sidebar', 'ul', 'project-list');
   addElement('.main-content', 'button', 'new-todo-btn', 'New Task');
   addModal();
 }
@@ -96,7 +96,8 @@ function addModal() {
     ''
   );
 
-  addElement('.project-select', 'option', '', '', 'value', '');
+  addElement('.project-select', 'option', 'project-option', '', 'value', '');
+
   addElement('form', 'div', 'new-project')
 
   addElement(

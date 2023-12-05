@@ -9,13 +9,14 @@ function createProject(name) {
   return {getName, getTodos, pushTodo};
 }
 
-function pushProject(project) {
-  projects.push(project);
+function pushProject(name) {
+  const newProject = createProject(name);
+  projects.push(newProject); 
 }
 
 function createTodo(title, dueDate, priority, details) {
-  let checklist = false;
-  return {title, dueDate, priority, details,  checklist};
+  let checked = false;
+  return {title, dueDate, priority, details,  checked};
 }
 
 export {getProjects, pushProject};
