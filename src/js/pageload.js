@@ -1,4 +1,4 @@
-import {addElement} from "./dom";
+import { addElement } from "./dom";
 
 function pageLoad(){
   addElement('body', 'h1', 'heading', 'TODO LIST');
@@ -9,13 +9,14 @@ function pageLoad(){
   addElement('.sidebar', 'h2', 'side-heading', 'Week');
   addElement('.sidebar', 'h2', 'side-heading', 'Projects');
   addElement('.sidebar', 'ul', 'project-list');
+  addElement('.main-content', 'div', 'todo-list');
   addElement('.main-content', 'button', 'new-todo-btn', 'New Task');
   addModal();
 }
 
 function addModal() {
   addElement('body', 'dialog');
-  addElement('dialog', 'form');
+  addElement('dialog', 'form', '', '', 'method', 'dialog');
 
   addElement(
     'form', 

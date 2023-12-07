@@ -1,6 +1,5 @@
-import editSVG from '../square-edit-outline.svg';
-import deleteSVG from '../delete.svg';
-import { getProjects, pushProject } from './projects';
+import { getProjects, pushProject , createTodo} from './projects';
+import { buildTodoList } from './todoList';
 
 function addElement(parentSelector, tag, className, text, ...args) {
   const parentElement = document.querySelector(parentSelector);
@@ -23,7 +22,7 @@ function addElement(parentSelector, tag, className, text, ...args) {
   parentElement.appendChild(newElement);
 }
 
-function buildProjectOptions() {
+function buildProjectLists() {
   const projectSelect = document.querySelector('.project-select');
   const projectList = document.querySelector('.project-list');
   projectSelect.textContent = '';
@@ -44,6 +43,7 @@ function buildProjectOptions() {
 
 function addEventListeners(){
   const dialog = document.querySelector('dialog');
+  const form = document.querySelector('form');
   const newTodoBtn = document.querySelector('.new-todo-btn');
   const cancelBtn = document.querySelector('.cancel-btn');
   const confirmBtn = document.querySelector('.confirm-btn');
@@ -51,7 +51,6 @@ function addEventListeners(){
 
   function handleDialogEscape(e) {
     if(e.key === 'Escape'){
-      const form = document.querySelector('form');
       form.reset();
       removeEventListener('keydown', handleDialogEscape);
     }
@@ -72,17 +71,44 @@ function addEventListeners(){
     const projectNames = getProjects().map((project) => project.getName());
     if(newProjectInput.value && !projectNames.includes(newProjectInput.value)){
       pushProject(newProjectInput.value);
-      buildProjectOptions();
+      buildProjectLists();
       const projectSelect = document.querySelector('.project-select');
       projectSelect.value = newProjectInput.value;
       newProjectInput.value = '';
     }
   });
 
-  confirmBtn.addEventListener('click', () => {
+  form.addEventListener('submit', () => {
+    const title = document.querySelector('.title-input').value;
+    const details = document.querySelector('.details-input').value;
+    const dueDate = document.querySelector('#due-date').value;
+    const priority = document.querySelector('.priority-select').value;
+    const projectName = document.querySelector('.project-select').value;
+    const newTodo = createTodo(title, dueDate, priority, details);
 
+    const project = getProjects().find((project) => {
+      return project.getName() === projectName;
+    });
+
+    project.pushTodo(newTodo);
+    buildTodoList();
   });
-  dialog.showModal();
+
+  pushProject('Project 1');
+  buildProjectLists();
+  getProjects()[0].getTodos()[0] = {
+    title: 'Brush teeth',
+    dueDate: 'Today', 
+    priority: 'high', 
+    checked: false,
+  };
+  getProjects()[0].getTodos()[1] = {
+    title: 'Do laundry',
+    dueDate: 'Tomorrow', 
+    priority: 'medium', 
+    checked: false,
+  };
+  buildTodoList();
 }
 
 export {addElement, addEventListeners};

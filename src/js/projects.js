@@ -19,4 +19,4 @@ function createTodo(title, dueDate, priority, details) {
   return {title, dueDate, priority, details,  checked};
 }
 
-export {getProjects, pushProject};
+export {getProjects, pushProject, createTodo};

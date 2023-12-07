@@ -28,6 +28,7 @@ form {
   gap: 10px;
 }
 
+input, 
 textarea {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -70,27 +71,34 @@ textarea {
 .project-list {
   list-style: none;
   padding-left: 20px;
+  font-weight: bold;
 }
 
 .main-content {
   background-color: #f2f5de;
   padding: 50px;
   display: grid;
-  grid-auto-rows: min-content;
+  grid-template-rows: min-content min-content;
+  gap: 30px;
   justify-items: center;
 }
 
 .new-todo-btn {
-  justify-self: start;
   padding: 5px 10px;
   border-radius: 10px;
 }
 
+.todo-list {
+  width: min(500px, 100%);
+  display: grid;
+  gap: 10px;
+}
+
 .todo {
+  width: 100%;
   display: grid;
   align-items: center;
   grid-template-columns: min-content 1fr repeat(3, min-content);
-  width: min(500px, 100%);
   gap: 10px;
   padding: 10px;
 }
@@ -100,14 +108,14 @@ textarea {
 }
 
 .medium {
-  border: yellow solid 2px;
+  border: orange solid 2px;
 }
 
 .high {
   border: red solid 2px;
 }
 
-.todo-edit {
+.todo img {
   height: 24px;
   width: 24px;
 }
