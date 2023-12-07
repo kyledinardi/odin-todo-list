@@ -47,7 +47,11 @@ function buildTodoList() {
         'todo-edit',
         '',
         'src',
-        editSVG
+        editSVG, 
+        'data-project', 
+        `${i}`,
+        'data-todo',
+        `${j}`,
       );
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`,  
@@ -55,7 +59,11 @@ function buildTodoList() {
         'todo-delete',
         '',
         'src',
-        deleteSVG
+        deleteSVG, 
+        'data-project', 
+        `${i}`,
+        'data-todo',
+        `${j}`,
       );
     });
   });
@@ -75,7 +83,16 @@ function addTodoEventListeners() {
   
   deleteBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      
+      todos.forEach((todo) => {
+        console.log();
+        if(
+          e.target.dataset.project === todo.dataset.project && 
+          e.target.dataset.todo === todo.dataset.todo
+          ){
+            getProjects()[todo.dataset.project].deleteTodo(todo.dataset.todo);
+            todo.remove();
+          }
+      });
     });
   });
 }
