@@ -1,14 +1,17 @@
 import editSVG from '../square-edit-outline.svg';
 import deleteSVG from '../delete.svg';
-import { addElement } from "./dom";
+import { addElement, openForm } from "./dom";
 import { getProjects } from "./projects";
 
 function buildTodoList() {
   document.querySelector('.todo-list').textContent = ''
+
   getProjects().forEach((project) => {
     const i = getProjects().indexOf(project);
+
     project.getTodos().forEach((todo) => {
       const j = project.getTodos().indexOf(todo);
+
       addElement(
         '.todo-list', 
         'div', 
@@ -21,6 +24,7 @@ function buildTodoList() {
         'data-todo',
         `${j}`,
       );
+
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`, 
         'input', 
@@ -29,18 +33,21 @@ function buildTodoList() {
         'type', 
         'checkbox'
       );
+
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`,   
         'p', 
         'todo-title', 
         todo.title
       );
+
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`,   
         'p', 
         'todo-due-date', 
         todo.dueDate
       );
+
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`,  
         'img', 
@@ -53,6 +60,7 @@ function buildTodoList() {
         'data-todo',
         `${j}`,
       );
+
       addElement(
         `[data-project = '${i}'][data-todo = '${j}']`,  
         'img', 
@@ -67,6 +75,7 @@ function buildTodoList() {
       );
     });
   });
+
   addTodoEventListeners();
 }
 
@@ -77,14 +86,20 @@ function addTodoEventListeners() {
 
   editBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      
+      todos.forEach((todo) => {
+        if(
+          e.target.dataset.project === todo.dataset.project && 
+          e.target.dataset.todo === todo.dataset.todo
+          ) {
+            openForm(todo.dataset.project, todo.dataset.todo);
+          }
+      });
     });
   });  
   
   deleteBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       todos.forEach((todo) => {
-        console.log();
         if(
           e.target.dataset.project === todo.dataset.project && 
           e.target.dataset.todo === todo.dataset.todo

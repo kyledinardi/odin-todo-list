@@ -8,7 +8,7 @@ function createProject(name) {
   const getTodos = () => todos;
   const pushTodo = (newTodo) => todos.push(newTodo);
   const deleteTodo = (i) => todos.splice(i, 1);
-  return {getName, getTodos, pushTodo, deleteTodo, todos};
+  return {getName, getTodos, pushTodo, deleteTodo};
 }
 
 function pushProject(name) {

@@ -99,7 +99,7 @@ function addModal() {
 
   addElement('.project-select', 'option', 'project-option', '', 'value', '');
 
-  addElement('form', 'div', 'new-project')
+  addElement('form', 'div', 'new-project', '', 'data-edit', 'false')
 
   addElement(
     '.new-project', 
@@ -109,6 +109,7 @@ function addModal() {
     'placeholder', 
     'New Project'
   );
+
   addElement(
     '.new-project', 
     'button', 
@@ -119,7 +120,7 @@ function addModal() {
   );
 
   addElement('form', 'div', 'dialog-btns');
-  addElement('.dialog-btns', 'button', 'confirm-btn', 'Add Task');
+  addElement('.dialog-btns', 'button', 'confirm-btn');
 
   addElement(
     '.dialog-btns', 
