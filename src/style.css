@@ -74,6 +74,10 @@ textarea {
   font-weight: bold;
 }
 
+.project-li {
+  margin: 10px 0;
+}
+
 .main-content {
   background-color: #f2f5de;
   padding: 50px;

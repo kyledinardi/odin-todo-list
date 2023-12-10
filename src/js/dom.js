@@ -1,5 +1,5 @@
-import { getProjects, pushProject , createTodo} from './projects';
 import { buildTodoList } from './todoList';
+import { createTodo, deleteTodo, getTodos, getProjects, pushProject } from './todos';
 
 function addElement(parentSelector, tag, className, text, ...args) {
   const parentElement = document.querySelector(parentSelector);
@@ -29,68 +29,64 @@ function buildProjectLists() {
   projectList.textContent = '';
   addElement('.project-select', 'option', 'project-option', '', 'value', '')
   getProjects().forEach((project) => {
+    addElement('.project-list', 'li', 'project-li', project);
+
     addElement(
       '.project-select', 
       'option', 
       'project-option', 
-      project.getName(), 
+      project, 
       'value', 
-      project.getName()
+      project
     );
-    addElement('.project-list', 'li', 'project-li', project.getName());
   });
 }
 
-function openForm(project, todo) {
+function openForm(todoIndex) {
   const dialog = document.querySelector('dialog');
   const form = document.querySelector('form');
   const confirmBtn = document.querySelector('.confirm-btn')
 
-  if(project && todo){
+  if(todoIndex) {
     confirmBtn.textContent = 'Edit Task';
+    const currentTodo = getTodos()[todoIndex];
     form.setAttribute('data-edit', 'true');
-    form.setAttribute('data-project', project)
-    form.setAttribute('data-todo', todo);
+    form.setAttribute('data-index', todoIndex);
     const title = document.querySelector('.title-input');
     const dueDate = document.querySelector('#due-date');
     const priority = document.querySelector('.priority-select');
     const projectName = document.querySelector('.project-select');
     const details = document.querySelector('.details-input');
-    title.value = getProjects()[project].getTodos()[todo].title;
-    dueDate.value = getProjects()[project].getTodos()[todo].dueDate;
-    priority.value = getProjects()[project].getTodos()[todo].priority;
-    projectName.value = getProjects()[project].getName();
-    
-    if(details.value) {
-      details.value = getProjects()[project].getTodos()[todo].details;
+    title.value = currentTodo.title;
+    dueDate.value = currentTodo.dueDate;
+    priority.value = currentTodo.priority;
+    projectName.value = currentTodo.project;
+
+    if(currentTodo.detais) {
+      details.value = currentTodo.details;
     }
-  } else{
+  } else {
     confirmBtn.textContent = 'Add Task';
     form.setAttribute('data-edit', 'false')
-    form.reset();
+    form.reset;
   }
 
   dialog.showModal();
 }
 
-function submitForm(project, todo) {
+function submitForm() {
   const form = document.querySelector('form');
   const title = document.querySelector('.title-input').value;
   const dueDate = document.querySelector('#due-date').value;
   const priority = document.querySelector('.priority-select').value;
-  const projectName = document.querySelector('.project-select').value;
   const details = document.querySelector('.details-input').value;
-  const newTodo = createTodo(title, dueDate, priority, details);
+  const project = document.querySelector('.project-select').value;
+  createTodo(title, dueDate, priority, project, details);
 
-  const projectWithNewTodo = getProjects().find((project) => {
-    return project.getName() === projectName;
-  });
-
-  if(form.dataset.edit = true) {
-    getProjects()[form.dataset.project].deleteTodo(form.dataset.todo);
+  if(form.getAttribute('data-edit') === 'true') {
+    deleteTodo(parseInt(form.getAttribute('data-index')));
   }
-  
-  projectWithNewTodo.pushTodo(newTodo);
+
   buildTodoList();
 }
 
@@ -101,17 +97,21 @@ function addEventListeners(){
   const cancelBtn = document.querySelector('.cancel-btn');
   const newProjectBtn = document.querySelector('.new-project-btn');
 
-  newTodoBtn.addEventListener('click', openForm);
-  
+  newTodoBtn.addEventListener('click', () => {
+    openForm();
+  });
+
   cancelBtn.addEventListener('click', () => {
     dialog.close();
   });
 
+  form.addEventListener('submit', submitForm);
+
   newProjectBtn.addEventListener('click', () => {
     const newProjectInput = document.querySelector('.new-project-input');
-    const projectNames = getProjects().map((project) => project.getName());
+    const isInProjects = getProjects().includes(newProjectInput.value);
 
-    if(newProjectInput.value && !projectNames.includes(newProjectInput.value)){
+    if(newProjectInput.value && !isInProjects) {
       pushProject(newProjectInput.value);
       buildProjectLists();
       const projectSelect = document.querySelector('.project-select');
@@ -120,25 +120,12 @@ function addEventListeners(){
     }
   });
 
-  form.addEventListener('submit', submitForm);
-
   pushProject('Project 1');
+  pushProject('Project 2')
   buildProjectLists();
-
-  getProjects()[0].getTodos()[0] = {
-    title: 'Brush teeth',
-    dueDate: '2023-12-07', 
-    priority: 'high', 
-    checked: false,
-  };
-
-  getProjects()[0].getTodos()[1] = {
-    title: 'Do laundry',
-    dueDate: '2023-12-07', 
-    priority: 'medium', 
-    checked: false,
-  };
-
+  createTodo('Brush teeth', '2023-12-08', 'high', 'Project 1');
+  createTodo('Do laundry', '2023-12-07', 'medium', 'Project 1',);
+  createTodo('Shower', '2023-11-07', 'low', 'Project 2');
   buildTodoList();
 }
 
