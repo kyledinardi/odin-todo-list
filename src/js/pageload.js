@@ -4,9 +4,9 @@ function pageLoad(){
   addElement('body', 'h1', 'heading', 'TODO LIST');
   addElement('body', 'div', 'sidebar');
   addElement('body', 'div', 'main-content');
-  addElement('.sidebar', 'h2', 'side-heading', 'Home');
-  addElement('.sidebar', 'h2', 'side-heading', 'Today');
-  addElement('.sidebar', 'h2', 'side-heading', 'Week');
+  addElement('.sidebar', 'h2', '', 'Home', 'class', 'side-heading home');
+  addElement('.sidebar', 'h2', '', 'Today', 'class', 'side-heading today');
+  addElement('.sidebar', 'h2', '', 'Week', 'class', 'side-heading week');
   addElement('.sidebar', 'h2', 'side-heading', 'Projects');
   addElement('.sidebar', 'ul', 'project-list');
   addElement('.main-content', 'div', 'todo-list');
@@ -130,6 +130,20 @@ function addModal() {
     'type', 
     'reset'
   );
+
+  addElement('body', 'dialog', 'see-info');
+  addElement('.see-info', 'div', 'see-info-div')
+  addElement('.see-info-div', 'p', '', 'Task: ');
+  addElement('.see-info-div', 'p', 'see-title');
+  addElement('.see-info-div', 'p', '', 'Details: ');
+  addElement('.see-info-div', 'p', 'see-details');
+  addElement('.see-info-div', 'p', '', 'Due Date: ');
+  addElement('.see-info-div', 'p', 'see-date');
+  addElement('.see-info-div', 'p', '', 'Priority: ');
+  addElement('.see-info-div', 'p', 'see-priority');
+  addElement('.see-info-div', 'p', '', 'Project: ')
+  addElement('.see-info-div', 'p', 'see-project');
+  addElement('.see-info-div', 'button', 'info-close', 'Close');
 }
 
 export default pageLoad;

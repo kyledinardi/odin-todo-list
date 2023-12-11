@@ -29,8 +29,6 @@ function buildProjectLists() {
   projectList.textContent = '';
   addElement('.project-select', 'option', 'project-option', '', 'value', '')
   getProjects().forEach((project) => {
-    addElement('.project-list', 'li', 'project-li', project);
-
     addElement(
       '.project-select', 
       'option', 
@@ -39,7 +37,17 @@ function buildProjectLists() {
       'value', 
       project
     );
+    
+    addElement('.project-list', 'li', 'project-li', project);
   });
+
+  const projectLIs = document.querySelectorAll('.project-li')
+
+  projectLIs.forEach((li) => {
+    li.addEventListener('click', (e) => {
+      buildTodoList(e.target.textContent);
+    })
+  })
 }
 
 function openForm(todoIndex) {
@@ -90,12 +98,35 @@ function submitForm() {
   buildTodoList();
 }
 
+function openInfo(todoIndex) {
+  const infoDialog = document.querySelector('.see-info');
+  const seeTitle = document.querySelector('.see-title');
+  const seeDetails = document.querySelector('.see-details');
+  const seeDate = document.querySelector('.see-date');
+  const seePriority = document.querySelector('.see-priority');
+  const seeProject = document.querySelector('.see-project');
+  const priority = getTodos()[todoIndex].priority;
+  const priorityCapital = 
+    `${priority.charAt(0).toUpperCase()}${priority.slice(1)}`;
+  seeTitle.textContent = getTodos()[todoIndex].title;
+  seeDetails.textContent = getTodos()[todoIndex].details;
+  seeDate.textContent = getTodos()[todoIndex].dueDate;
+  seePriority.textContent = priorityCapital;
+  seeProject.textContent = getTodos()[todoIndex].project;
+  infoDialog.showModal();
+}
+
 function addEventListeners(){
   const dialog = document.querySelector('dialog');
   const form = document.querySelector('form');
   const newTodoBtn = document.querySelector('.new-todo-btn');
   const cancelBtn = document.querySelector('.cancel-btn');
+  const seeInfo = document.querySelector('.see-info');
+  const infoClose = document.querySelector('.info-close');
   const newProjectBtn = document.querySelector('.new-project-btn');
+  const home = document.querySelector('.home');
+  const today = document.querySelector('.today');
+  const week = document.querySelector('.week')
 
   newTodoBtn.addEventListener('click', () => {
     openForm();
@@ -106,6 +137,10 @@ function addEventListeners(){
   });
 
   form.addEventListener('submit', submitForm);
+
+  infoClose.addEventListener('click', () => {
+    seeInfo.close();
+  });
 
   newProjectBtn.addEventListener('click', () => {
     const newProjectInput = document.querySelector('.new-project-input');
@@ -120,13 +155,25 @@ function addEventListeners(){
     }
   });
 
+  home.addEventListener('click', () => {
+    buildTodoList();
+  });
+
+  today.addEventListener('click', () => {
+    buildTodoList(false, true)
+  });
+
+  week.addEventListener('click', () => {
+    buildTodoList(false, false, true)
+  });
+
   pushProject('Project 1');
-  pushProject('Project 2')
+  pushProject('Project 2');
   buildProjectLists();
-  createTodo('Brush teeth', '2023-12-08', 'high', 'Project 1');
-  createTodo('Do laundry', '2023-12-07', 'medium', 'Project 1',);
+  createTodo('Brush teeth', '2023-12-10', 'high', 'Project 1');
+  createTodo('Do laundry', '2023-12-11', 'medium', 'Project 1',);
   createTodo('Shower', '2023-11-07', 'low', 'Project 2');
   buildTodoList();
 }
 
-export {addElement, addEventListeners, openForm};
+export {addElement, addEventListeners, openForm, openInfo};
