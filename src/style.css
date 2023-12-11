@@ -144,6 +144,19 @@ button,
   border: red solid 2px;
 }
 
+.checked {
+  text-decoration: line-through;
+  color: grey;
+}
+
+[past-due = 'true'] {
+  color: #a80000;
+}
+
+[past-due = 'false'] {
+  color: #005C00;
+}
+
 .edit-btn,
 .delete-btn {
   border: none;

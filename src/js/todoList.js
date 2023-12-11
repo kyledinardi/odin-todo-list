@@ -2,24 +2,27 @@ import editSVG from '../square-edit-outline.svg';
 import deleteSVG from '../delete.svg';
 import { addElement, openForm, openInfo } from "./dom";
 import { deleteTodo, getTodos } from './todos';
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, compareAsc } from 'date-fns';
 
 function buildTodoList(project, today, week) {
   document.querySelector('.todo-list').textContent = ''
   let filteredTodos
   let sortedTodos;
+  const date = new Date;
 
   if(project || today || week) {
-    const date = new Date;
-
     function futureDates(days) {
-      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + days}`
+      const futureDate = 
+        `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + days}`;
+
+      return futureDate;
     }
 
     if(project) {
       filteredTodos = getTodos().filter((todo) => todo.project === project);
     } else if(today) {
-      filteredTodos = getTodos().filter((todo) => todo.dueDate === futureDates(0));
+      filteredTodos = 
+        getTodos().filter((todo) => todo.dueDate === futureDates(0));
     } else if(week) {
       filteredTodos = getTodos().filter((todo) => {
         for(let i = 0; i < 7; i++){
@@ -38,11 +41,19 @@ function buildTodoList(project, today, week) {
       if(b.dueDate > a.dueDate) return -1;
     });
   }
+  console.log(compareAsc(date, parseISO('2023-12-12')))
   
   sortedTodos.forEach((todo) => {
     const i = getTodos().indexOf(todo);
     let checkedAttribute
+    let pastDue
     todo.checked ? checkedAttribute = 'checked' : checkedAttribute = null;
+    
+    if(compareAsc(date, parseISO(todo.dueDate)) === 1) {
+      pastDue = 'true';
+    } else {
+      pastDue = 'false';
+    }
     
     addElement(
       '.todo-list',
@@ -50,7 +61,7 @@ function buildTodoList(project, today, week) {
       '',
       '',
       'class',
-      `todo ${todo.priority}`,
+      `todo ${todo.priority} ${checkedAttribute}`,
       'data-index',
       `${i}`
     )
@@ -78,7 +89,9 @@ function buildTodoList(project, today, week) {
       `[data-index = '${i}']`,
       'p', 
       'todo-due-date', 
-      format(parseISO(todo.dueDate), 'MM/dd/yy')
+      format(parseISO(todo.dueDate), 'MM/dd/yyyy'),
+      'past-due',
+      pastDue
     );
 
     addElement(
@@ -129,19 +142,23 @@ function addTodoEventListeners() {
     box.addEventListener('change', (e) => {
       document.querySelector('.see-info').close();
       todos.forEach((todo) => {
-        if(e.target.dataset.index === todo.dataset.index) {
-          const currentTodo =  getTodos()[todo.dataset.index];
+        const i = todo.dataset.index
+        if(e.target.dataset.index === i) {
+          const currentTodo =  getTodos()[i];
 
-          const checkBox = document.querySelector(
-            `[type = 'checkbox'][data-index = '${todo.dataset.index}']`
-          );
+          const checkBox = 
+            document.querySelector(`[type = 'checkbox'][data-index = '${i}']`);
+
+          const todoDiv = document.querySelector(`.todo[data-index = '${i}']`);
           
           if(currentTodo.checked) {
             currentTodo.checked = false;
             checkBox.removeAttribute('checked');
+            todo.classList.remove('checked');
           } else {
             currentTodo.checked = true;
             checkBox.setAttribute('checked', '');
+            todo.classList.add('checked');
           }
         }
       });

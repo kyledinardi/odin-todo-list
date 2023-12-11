@@ -170,7 +170,7 @@ function addEventListeners(){
   pushProject('Project 1');
   pushProject('Project 2');
   buildProjectLists();
-  createTodo('Brush teeth', '2023-12-10', 'high', 'Project 1');
+  createTodo('Brush teeth', '2023-12-12', 'high', 'Project 1');
   createTodo('Do laundry', '2023-12-11', 'medium', 'Project 1',);
   createTodo('Shower', '2023-11-07', 'low', 'Project 2');
   buildTodoList();
