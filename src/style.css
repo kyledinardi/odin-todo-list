@@ -93,14 +93,27 @@ button,
 
 .project-list {
   list-style: none;
-  padding-left: 20px;
+  padding-left: 0;
   font-weight: bold;
 }
 
 .project-li {
   margin: 10px 0;
-  width: max-content;
-  inline-size: 180px;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.project-count {
+  width: 20px;
+  height: 20px;
+  background-color: #86e7b8;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .9rem;
 }
 
 .main-content {

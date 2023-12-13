@@ -1,7 +1,7 @@
 import editSVG from '../square-edit-outline.svg';
 import deleteSVG from '../delete.svg';
-import { addElement, openForm, openInfo } from "./dom";
-import { deleteTodo, getTodos } from './todos';
+import { addElement, openForm, openInfo, buildProjectLists } from "./dom";
+import { deleteTodo, deleteUnusedProjects, getTodos, populateStorage } from './todos';
 import { parseISO, format, compareAsc } from 'date-fns';
 
 function buildTodoList(project, today, week) {
@@ -41,7 +41,6 @@ function buildTodoList(project, today, week) {
       if(b.dueDate > a.dueDate) return -1;
     });
   }
-  console.log(compareAsc(date, parseISO('2023-12-12')))
   
   sortedTodos.forEach((todo) => {
     const i = getTodos().indexOf(todo);
@@ -162,6 +161,7 @@ function addTodoEventListeners() {
           }
         }
       });
+      populateStorage();
     });
   });
 
@@ -171,6 +171,8 @@ function addTodoEventListeners() {
         if(e.target.dataset.index === todo.dataset.index) {
           openForm(todo.dataset.index);
           e.stopPropagation();
+          buildProjectLists();
+          deleteUnusedProjects();
         }
       });
     })
@@ -183,6 +185,8 @@ function addTodoEventListeners() {
           deleteTodo(todo.dataset.index);
           todo.remove();
           e.stopPropagation();
+          deleteUnusedProjects();
+          buildProjectLists();
         }
       })
     });

@@ -1,5 +1,8 @@
 import { buildTodoList } from './todoList';
-import { createTodo, deleteTodo, getTodos, getProjects, pushProject } from './todos';
+import {
+  createTodo, deleteTodo, getTodos, getProjects, pushProject, 
+  deleteUnusedProjects, countTodosInProjet
+} from './todos';
 
 function addElement(parentSelector, tag, className, text, ...args) {
   const parentElement = document.querySelector(parentSelector);
@@ -28,6 +31,7 @@ function buildProjectLists() {
   projectSelect.textContent = '';
   projectList.textContent = '';
   addElement('.project-select', 'option', 'project-option', '', 'value', '')
+  
   getProjects().forEach((project) => {
     addElement(
       '.project-select', 
@@ -38,7 +42,16 @@ function buildProjectLists() {
       project
     );
     
-    addElement('.project-list', 'li', 'project-li', project);
+    addElement('.project-list', 'div', 'project-li', '', 'id', project);
+
+    addElement(
+      `#${project}`, 
+      'p', 
+      'project-count', 
+      `${countTodosInProjet(project)}`
+      );
+
+    addElement(`#${project}`, 'p', 'project-name', project);
   });
 
   const projectLIs = document.querySelectorAll('.project-li')
@@ -76,7 +89,7 @@ function openForm(todoIndex) {
   } else {
     confirmBtn.textContent = 'Add Task';
     form.setAttribute('data-edit', 'false')
-    form.reset;
+    form.reset();
   }
 
   dialog.showModal();
@@ -95,6 +108,8 @@ function submitForm() {
     deleteTodo(parseInt(form.getAttribute('data-index')));
   }
 
+  deleteUnusedProjects();
+  buildProjectLists();
   buildTodoList();
 }
 
@@ -167,13 +182,8 @@ function addEventListeners(){
     buildTodoList(false, false, true)
   });
 
-  pushProject('Project 1');
-  pushProject('Project 2');
-  buildProjectLists();
-  createTodo('Brush teeth', '2023-12-12', 'high', 'Project 1');
-  createTodo('Do laundry', '2023-12-11', 'medium', 'Project 1',);
-  createTodo('Shower', '2023-11-07', 'low', 'Project 2');
   buildTodoList();
+  buildProjectLists();
 }
 
-export {addElement, addEventListeners, openForm, openInfo};
+export {addElement, addEventListeners, openForm, openInfo, buildProjectLists};

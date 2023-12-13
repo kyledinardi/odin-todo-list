@@ -1,4 +1,11 @@
 import { addElement } from "./dom";
+import { populateStorage, setArrays } from "./todos";
+
+if(!localStorage.getItem('todoArray')) {
+  populateStorage();
+} else {
+  setArrays();
+}
 
 function pageLoad(){
   addElement('body', 'h1', 'heading', 'TODO LIST');
