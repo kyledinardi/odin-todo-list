@@ -1,23 +1,23 @@
-import { buildTodoList } from './todoList';
+import buildTodoList from './todoList';
 import {
-  createTodo, deleteTodo, getTodos, getProjects, pushProject, 
-  deleteUnusedProjects, countTodosInProjet
+  createTodo, deleteTodo, getTodos, getProjects, pushProject,
+  deleteUnusedProjects, countTodosInProjet,
 } from './todos';
 
 function addElement(parentSelector, tag, className, text, ...args) {
   const parentElement = document.querySelector(parentSelector);
   const newElement = document.createElement(tag);
 
-  if(className){
+  if (className) {
     newElement.classList.add(className);
   }
 
-  if(text){
+  if (text) {
     newElement.textContent = text;
   }
 
-  if(args.length !== 0) {
-    for(let i = 0; i < args.length; i += 2){
+  if (args.length !== 0) {
+    for (let i = 0; i < args.length; i += 2) {
       newElement.setAttribute(args[i], args[i + 1]);
     }
   }
@@ -30,45 +30,45 @@ function buildProjectLists() {
   const projectList = document.querySelector('.project-list');
   projectSelect.textContent = '';
   projectList.textContent = '';
-  addElement('.project-select', 'option', 'project-option', '', 'value', '')
-  
+  addElement('.project-select', 'option', 'project-option', '', 'value', '');
+
   getProjects().forEach((project) => {
     addElement(
-      '.project-select', 
-      'option', 
-      'project-option', 
-      project, 
-      'value', 
-      project
+      '.project-select',
+      'option',
+      'project-option',
+      project,
+      'value',
+      project,
     );
-    
+
     addElement('.project-list', 'div', 'project-li', '', 'id', project);
 
     addElement(
-      `#${project}`, 
-      'p', 
-      'project-count', 
-      `${countTodosInProjet(project)}`
-      );
+      `#${project}`,
+      'p',
+      'project-count',
+      `${countTodosInProjet(project)}`,
+    );
 
     addElement(`#${project}`, 'p', 'project-name', project);
   });
 
-  const projectLIs = document.querySelectorAll('.project-li')
+  const projectLIs = document.querySelectorAll('.project-li');
 
   projectLIs.forEach((li) => {
     li.addEventListener('click', (e) => {
       buildTodoList(e.target.textContent);
-    })
-  })
+    });
+  });
 }
 
 function openForm(todoIndex) {
   const dialog = document.querySelector('dialog');
   const form = document.querySelector('form');
-  const confirmBtn = document.querySelector('.confirm-btn')
+  const confirmBtn = document.querySelector('.confirm-btn');
 
-  if(todoIndex) {
+  if (todoIndex) {
     confirmBtn.textContent = 'Edit Task';
     const currentTodo = getTodos()[todoIndex];
     form.setAttribute('data-edit', 'true');
@@ -83,12 +83,12 @@ function openForm(todoIndex) {
     priority.value = currentTodo.priority;
     projectName.value = currentTodo.project;
 
-    if(currentTodo.detais) {
+    if (currentTodo.detais) {
       details.value = currentTodo.details;
     }
   } else {
     confirmBtn.textContent = 'Add Task';
-    form.setAttribute('data-edit', 'false')
+    form.setAttribute('data-edit', 'false');
     form.reset();
   }
 
@@ -104,8 +104,8 @@ function submitForm() {
   const project = document.querySelector('.project-select').value;
   createTodo(title, dueDate, priority, project, details);
 
-  if(form.getAttribute('data-edit') === 'true') {
-    deleteTodo(parseInt(form.getAttribute('data-index')));
+  if (form.getAttribute('data-edit') === 'true') {
+    deleteTodo(parseInt(form.getAttribute('data-index'), 10));
   }
 
   deleteUnusedProjects();
@@ -120,9 +120,8 @@ function openInfo(todoIndex) {
   const seeDate = document.querySelector('.see-date');
   const seePriority = document.querySelector('.see-priority');
   const seeProject = document.querySelector('.see-project');
-  const priority = getTodos()[todoIndex].priority;
-  const priorityCapital = 
-    `${priority.charAt(0).toUpperCase()}${priority.slice(1)}`;
+  const { priority } = getTodos()[todoIndex];
+  const priorityCapital = `${priority.charAt(0).toUpperCase()}${priority.slice(1)}`;
   seeTitle.textContent = getTodos()[todoIndex].title;
   seeDetails.textContent = getTodos()[todoIndex].details;
   seeDate.textContent = getTodos()[todoIndex].dueDate;
@@ -131,7 +130,7 @@ function openInfo(todoIndex) {
   infoDialog.showModal();
 }
 
-function addEventListeners(){
+function addEventListeners() {
   const dialog = document.querySelector('dialog');
   const form = document.querySelector('form');
   const newTodoBtn = document.querySelector('.new-todo-btn');
@@ -141,7 +140,7 @@ function addEventListeners(){
   const newProjectBtn = document.querySelector('.new-project-btn');
   const home = document.querySelector('.home');
   const today = document.querySelector('.today');
-  const week = document.querySelector('.week')
+  const week = document.querySelector('.week');
 
   newTodoBtn.addEventListener('click', () => {
     openForm();
@@ -161,7 +160,7 @@ function addEventListeners(){
     const newProjectInput = document.querySelector('.new-project-input');
     const isInProjects = getProjects().includes(newProjectInput.value);
 
-    if(newProjectInput.value && !isInProjects) {
+    if (newProjectInput.value && !isInProjects) {
       pushProject(newProjectInput.value);
       buildProjectLists();
       const projectSelect = document.querySelector('.project-select');
@@ -175,15 +174,17 @@ function addEventListeners(){
   });
 
   today.addEventListener('click', () => {
-    buildTodoList(false, true)
+    buildTodoList(false, true);
   });
 
   week.addEventListener('click', () => {
-    buildTodoList(false, false, true)
+    buildTodoList(false, false, true);
   });
 
   buildTodoList();
   buildProjectLists();
 }
 
-export {addElement, addEventListeners, openForm, openInfo, buildProjectLists};
+export {
+  addElement, addEventListeners, openForm, openInfo, buildProjectLists,
+};

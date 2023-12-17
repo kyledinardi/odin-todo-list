@@ -1,9 +1,16 @@
 const todos = [];
 const projects = [];
 
+function populateStorage() {
+  localStorage.setItem('todoArray', JSON.stringify(todos));
+  localStorage.setItem('projectArray', JSON.stringify(projects));
+}
+
 function createTodo(title, dueDate, priority, project, details) {
-  let checked = false;
-  todos.push({title, dueDate, priority, project, details, checked});
+  const checked = false;
+  todos.push({
+    title, dueDate, priority, project, details, checked,
+  });
   populateStorage();
 }
 
@@ -23,7 +30,7 @@ function getProjects() {
 function deleteUnusedProjects() {
   projects.forEach((project, index) => {
     const todoProjects = todos.map((todo) => todo.project);
-    if(!todoProjects.includes(project)){
+    if (!todoProjects.includes(project)) {
       projects.splice(index, 1);
     }
   });
@@ -38,23 +45,19 @@ function pushProject(name) {
 function countTodosInProjet(project) {
   let count = 0;
   const todoProjects = todos.map((todo) => todo.project);
-  
+
   todoProjects.forEach((todoProject) => {
-    if(project === todoProject) {
-      count++;};
+    if (project === todoProject) {
+      count += 1;
+    }
   });
 
   return count;
 }
 
-function populateStorage() {
-  localStorage.setItem('todoArray', JSON.stringify(todos));
-  localStorage.setItem('projectArray', JSON.stringify(projects));
-}
-
 function setArrays() {
   const todoArray = JSON.parse(localStorage.getItem('todoArray'));
-  const projectArray = JSON.parse(localStorage.getItem('projectArray'))
+  const projectArray = JSON.parse(localStorage.getItem('projectArray'));
 
   todoArray.forEach((todo) => {
     todos.push(todo);
@@ -66,6 +69,6 @@ function setArrays() {
 }
 
 export {
-  createTodo, getTodos, deleteTodo, getProjects, pushProject, populateStorage, 
-  setArrays, deleteUnusedProjects, countTodosInProjet
+  createTodo, getTodos, deleteTodo, getProjects, pushProject, populateStorage,
+  setArrays, deleteUnusedProjects, countTodosInProjet,
 };
