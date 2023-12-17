@@ -9,7 +9,12 @@ function populateStorage() {
 function createTodo(title, dueDate, priority, project, details) {
   const checked = false;
   todos.push({
-    title, dueDate, priority, project, details, checked,
+    title,
+    dueDate,
+    priority,
+    project,
+    details,
+    checked,
   });
   populateStorage();
 }
@@ -69,6 +74,13 @@ function setArrays() {
 }
 
 export {
-  createTodo, getTodos, deleteTodo, getProjects, pushProject, populateStorage,
-  setArrays, deleteUnusedProjects, countTodosInProjet,
+  createTodo,
+  getTodos,
+  deleteTodo,
+  getProjects,
+  pushProject,
+  populateStorage,
+  setArrays,
+  deleteUnusedProjects,
+  countTodosInProjet,
 };
