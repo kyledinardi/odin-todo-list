@@ -28,7 +28,7 @@ form {
   gap: 10px;
 }
 
-input, 
+input,
 textarea {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -113,7 +113,7 @@ button,
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .main-content {
@@ -162,12 +162,12 @@ button,
   color: grey;
 }
 
-[past-due = 'true'] {
+[past-due='true'] {
   color: #a80000;
 }
 
-[past-due = 'false'] {
-  color: #005C00;
+[past-due='false'] {
+  color: #005c00;
 }
 
 .edit-btn,

@@ -1,7 +1,12 @@
 import buildTodoList from './todoList';
 import {
-  createTodo, deleteTodo, getTodos, getProjects, pushProject,
-  deleteUnusedProjects, countTodosInProjet,
+  createTodo,
+  deleteTodo,
+  getTodos,
+  getProjects,
+  pushProject,
+  deleteUnusedProjects,
+  countTodosInProjet,
 } from './todos';
 
 function addElement(parentSelector, tag, className, text, ...args) {
@@ -121,7 +126,9 @@ function openInfo(todoIndex) {
   const seePriority = document.querySelector('.see-priority');
   const seeProject = document.querySelector('.see-project');
   const { priority } = getTodos()[todoIndex];
-  const priorityCapital = `${priority.charAt(0).toUpperCase()}${priority.slice(1)}`;
+  const priorityCapital = `${priority.charAt(0).toUpperCase()}${priority.slice(
+    1,
+  )}`;
   seeTitle.textContent = getTodos()[todoIndex].title;
   seeDetails.textContent = getTodos()[todoIndex].details;
   seeDate.textContent = getTodos()[todoIndex].dueDate;
@@ -185,6 +192,4 @@ function addEventListeners() {
   buildProjectLists();
 }
 
-export {
-  addElement, addEventListeners, openForm, openInfo, buildProjectLists,
-};
+export { addElement, addEventListeners, openForm, openInfo, buildProjectLists };

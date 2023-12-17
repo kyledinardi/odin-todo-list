@@ -1,11 +1,12 @@
 import { parseISO, format, compareAsc } from 'date-fns';
 import editSVG from '../square-edit-outline.svg';
 import deleteSVG from '../delete.svg';
+import { addElement, openForm, openInfo, buildProjectLists } from './dom';
 import {
-  addElement, openForm, openInfo, buildProjectLists,
-} from './dom';
-import {
-  deleteTodo, deleteUnusedProjects, getTodos, populateStorage,
+  deleteTodo,
+  deleteUnusedProjects,
+  getTodos,
+  populateStorage,
 } from './todos';
 
 function addTodoEventListeners() {
@@ -22,7 +23,9 @@ function addTodoEventListeners() {
         if (e.target.dataset.index === i) {
           const currentTodo = getTodos()[i];
 
-          const checkBox = document.querySelector(`[type = 'checkbox'][data-index = '${i}']`);
+          const checkBox = document.querySelector(
+            `[type = 'checkbox'][data-index = '${i}']`,
+          );
 
           if (currentTodo.checked) {
             currentTodo.checked = false;
@@ -81,7 +84,9 @@ function buildTodoList(project, today, week) {
   let sortedTodos;
   const date = new Date();
   function futureDates(days) {
-    const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + days}`;
+    const futureDate = `${date.getFullYear()}-${date.getMonth() + 1}-${
+      date.getDate() + days
+    }`;
 
     return futureDate;
   }
@@ -90,7 +95,9 @@ function buildTodoList(project, today, week) {
     if (project) {
       filteredTodos = getTodos().filter((todo) => todo.project === project);
     } else if (today) {
-      filteredTodos = getTodos().filter((todo) => todo.dueDate === futureDates(0));
+      filteredTodos = getTodos().filter(
+        (todo) => todo.dueDate === futureDates(0),
+      );
     } else if (week) {
       filteredTodos = getTodos().filter((todo) => {
         for (let i = 0; i < 7; i += 1) {
@@ -147,12 +154,7 @@ function buildTodoList(project, today, week) {
       checkedAttribute,
     );
 
-    addElement(
-      `[data-index = '${i}']`,
-      'p',
-      'todo-title',
-      todo.title,
-    );
+    addElement(`[data-index = '${i}']`, 'p', 'todo-title', todo.title);
 
     addElement(
       `[data-index = '${i}']`,
@@ -163,17 +165,9 @@ function buildTodoList(project, today, week) {
       pastDue,
     );
 
-    addElement(
-      `[data-index = '${i}']`,
-      'button',
-      'edit-btn',
-    );
+    addElement(`[data-index = '${i}']`, 'button', 'edit-btn');
 
-    addElement(
-      `[data-index = '${i}']`,
-      'button',
-      'delete-btn',
-    );
+    addElement(`[data-index = '${i}']`, 'button', 'delete-btn');
 
     addElement(
       `[data-index = '${i}'] .edit-btn`,

@@ -115,14 +115,7 @@ function addModal() {
   addElement('form', 'div', 'dialog-btns');
   addElement('.dialog-btns', 'button', 'confirm-btn');
 
-  addElement(
-    '.dialog-btns',
-    'button',
-    'cancel-btn',
-    'Cancel',
-    'type',
-    'reset',
-  );
+  addElement('.dialog-btns', 'button', 'cancel-btn', 'Cancel', 'type', 'reset');
 
   addElement('body', 'dialog', 'see-info');
   addElement('.see-info', 'div', 'see-info-div');
